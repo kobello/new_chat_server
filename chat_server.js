@@ -19,24 +19,27 @@ function handleRequest(request, response) {
     } else if (path === '/chat') {
       console.log(assistant.request.method)
       if (request.method === 'GET') {
-        console.log('Parsing the GET') 
+        console.log('Parsing the GET')
+        now = new Date().toISOString()
+        console.log(now)
+        console.log(messages[0].when)
         let data = JSON.stringify(messages);
         let type = mime.lookup('json');
         assistant.finishResponse(type, data);
       } else {
-      console.log('Parsing the POST');
-      assistant.parsePostParams((params) => {
-        let message = {
-          name: "Anonymous",
-          body: params.body,
-          when: new Date().toISOString()
-        }
-        messages.push(message);
-        let data = JSON.stringify(messages);
-        let type = mime.lookup('json');
-        assistant.finishResponse(type, data);
-      })
-    }
+        console.log('Parsing the POST');
+        assistant.parsePostParams((params) => {
+          let message = {
+            name: "Anonymous",
+            body: params.body,
+            when: new Date().toISOString()
+          }
+          messages.push(message);
+          let data = JSON.stringify(messages);
+          let type = mime.lookup('json');
+          assistant.finishResponse(type, data);
+        })
+      }
     } else {
       let fileName = path.slice(1);
       assistant.sendFile(fileName)

@@ -1,8 +1,8 @@
 {
-  "name": "simple-server",
+  "name": "chat_server",
   "version": "1.0.0",
   "description": "Source code for the \"Server Side JavaScript\" track:",
-  "main": "cookie_counter.js",
+  "main": "chat_server.js",
   "directories": {
     "lib": "lib"
   },
@@ -13,7 +13,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node simple_chat.js"
+    "start": "node chat_server.js"
   },
   "repository": {
     "type": "git",

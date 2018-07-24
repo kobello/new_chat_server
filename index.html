@@ -18,6 +18,7 @@
             <input type="submit">
         </form>
         <button id='getAllNow' action='chat' method='get'>Get All Messages</button>
+        <!-- <button id='getLastFifteen' action='chat' method='get'>Get Last 15 minutes</button> -->
     </div>
     <div id='chat-log'></div>
 
@@ -25,6 +26,8 @@
         let chatForm = document.getElementById('chat-form')
         let chatLog = document.getElementById('chat-log')
         let getAllNow = document.getElementById('getAllNow')
+        // let getLastFifteen = document.getElementById('getLastFifteen')
+        let since = 
 
         chatForm.addEventListener('submit', (event) => {
             let inputElement = chatForm.querySelector('input[name=body]')
@@ -52,7 +55,16 @@
                     chatLog.innerHTML = messages.map(message => message.body).join('<br>')
                 })
         })
-
+        
+        // getLastFifteen.addEventListener('click', (event) => {
+        //     fetch('/chat', {
+        //         method: 'GET',
+        //     })
+        //         .then((response) => response.json())
+        //         .then((messages) => {
+        //             chatLog.innerHTML = when.messages.map(message => message.when).join('<br>')
+        //         })
+        // })
     </script>
 </body>
 
