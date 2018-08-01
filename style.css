@@ -1,0 +1,27 @@
+h1 {
+    /* background-color:  */
+    border:solid,3px,black;
+    color: blue;
+}
+
+.fancy {
+    color: red;
+    
+}
+.when {
+    color:blue
+}
+.submitDiv {
+    /* background-color: tan; */
+    border: 5px,solid,black;
+    display:flex;
+    position: relative;
+    justify-content: space-between;
+    
+}
+.pickRoomDiv {
+    /* background-color: orange; */
+    border:5px,solid,black;
+    display:flex;
+    justify-content: bottom;
+}

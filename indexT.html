@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang- "en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+    <meta http-equiv="X-UA-Compatible" content="ie-edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <h1>Chat</h1>
+    <div class="pickRoomDiv">
+        <button id="pickRoom">Enter Room</button>
+        <select>
+            <option title="selectRoom">Select Room</option>
+            <option title="chatRoom">chat room</option>
+        </select>
+    </div>
+    <div id="form-input">
+        <form id="name-form" action="/" method="POST">
+            <input id="username" type="text" placeholder="Enter Username">
+            <input id="message" action="chat" type="text" placeholder="Enter Message">
+        </form>
+        <button id="send-message">
+            SEND
+        </button>
+    </div>
+    <br>
+    <br>
+    <button id='get-all-messages'>Get All Messages</button>
+    <div id='chat-log'></div>
+    <script>
+        const sendMessage = document.getElementById('send-message');
+        const username = document.getElementById('username');
+        const message = document.getElementById('message');
+        const chatLog = document.getElementById('chat-log');
+        const getMessages = document.getElementById('get-all-messages');
+        const messages = [];
+
+        sendMessage.addEventListener('click', (e) => {
+            const d = new Date().toISOString();
+            alert("Username: " + username.value + '\n' +
+                "Message: " + message.value + '\n' +
+                "When: " + d);
+            fetch('/chat', {
+                method: 'POST',
+                body: {
+                    body: message.value,
+                    name: username.value,
+                    when: d,
+                },
+            })
+                .then((response) => response.json())
+                .then((messages) => {
+                    chatLog.innerHTML = messages.map(message => message.body).join('<br>')
+                });
+        });
+
+        getMessages.addEventListener('click', (e) => {
+            fetch('/chat', {
+                method: 'GET',
+            })
+                .then((response) => response.json())
+                .then((messages) => {
+                    let latestFormatChatMessages = messages.map((message) => {
+                        return `<p class="fancy"><strong>${message.body}</strong></p> <p class="when">${new Date(message.when)}</p><p class="fancy"><strong>${message.name}</strong> </p>`;
+                    })
+                    chatLog.innerHTML = latestFormatChatMessages.join('<br>');
+                });
+        });
+    </script>
+</body>
+
+</html>

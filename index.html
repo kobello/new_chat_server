@@ -12,59 +12,114 @@
 
 <body>
     <h1>Chat</h1>
-    <div id="form-input">
-        <form id="chat-form" action="chat" method="POST">
-            <input type="text" name="body">
-            <input type="submit">
-        </form>
-        <button id='getAllNow' action='chat' method='get'>Get All Messages</button>
-        <!-- <button id='mostRecent' action='chat' method='get'>Get Last 15 minutes</button> -->
+
+    <div class="pickRoomDiv">
+        <button id="pickRoom">Enter Room</button>
+        <select>
+            <option title="selectRoom">Select Room</option>
+            <option title="chatRoom">chat room</option>
+        </select>
     </div>
+
+    <!-- <div id="form-input">
+        <form id="username" action="chat" method="POST">
+            <input type="text" placeholder="Enter Username">
+            <input type="submit" value="Submit Username">
+        </form>
+    </div> -->
+
+    <!-- <div id="form-input" class="submitDiv"> -->
+    <form id="chat-form" action="chat" method="POST">
+        <input type="text" id="userInput" placeholder="Enter Message">
+        <input type="submit" value="Submit Message">
+    </form>
+    <!-- </div> -->
     <div id='chat-log'></div>
+
+    <button id='getAll'>Get All Messages</button>
+
 
     <script>
         let chatForm = document.getElementById('chat-form')
         let chatLog = document.getElementById('chat-log')
-        let getAllNow = document.getElementById('getAllNow')
-        // let getLastFifteen = document.getElementById('getLastFifteen')
-        let since = 
+        let getAllMessages = document.getElementById('getAll')
+        getAllMessagesButton = getMessages;
+        // let since
+        function getMessages() {
 
-        chatForm.addEventListener('submit', (event) => {
-            let inputElement = chatForm.querySelector('input[name=body]')
-            let message = inputElement.value
+            fetch('/chat', {
+            })
+                .then((response) => response.json())
+                .then((messages) => {
+
+                    let latestFormatChatMessages = messages.map((message) => {
+
+                        let newPTag = (`<p class="fancy"> <strong>${message.body}</strong></p> <p class="when">${message.when}</p> <p class="fancy"><strong>${message.name}</strong> </p>`)
+                        return newPTag
+                    })
+                    chatLog.innerHTML = latestFormatChatMessages.join('<br>')
+                })
+        }
+
+
+        chatForm.addEventListener('submit', (e) => {
+            event.preventDefault();
+            let d = new Date().toISOString();
+            let messages = []
+            let userInput = document.getElementById('userInput');
+            let message = userInput.value;
             let params = new URLSearchParams();
             params.append('body', message)
-
-            fetch('/chat/room/', {
+            fetch('/chat    ', {
                 method: 'POST',
-                body: params
+                body: params,
             })
-                .then((response) => response.json())
-                .then((messages) => {
+                .then(response => response.json())
+                .then((message) => {
                     chatLog.innerHTML = messages.map(message => message.body).join('<br>')
-                })
-            event.preventDefault();
-        })
+                });
+        });
 
-        getAllNow.addEventListener('click', (event) => {
-            fetch('/chat', {
-                method: 'GET',
-            })
-                .then((response) => response.json())
-                .then((messages) => {
-                    chatLog.innerHTML = messages.map(message => message.body).join('<br>')
-                })
-        })
-        
-        // getLastFifteen.addEventListener('click', (event) => {
+        // chatForm.addEventListener('submit', (event) => {
+
+        //     // prevents the event from performing the default function.
+        //     event.preventDefault();
+
+        //     let inputElement = chatForm.querySelector('input[name=body]')
+        //     // let inputElement = document.getElementById('newMessageInput') 
+
+        //     let message = inputElement.value
+
+        //     // the function below gets all of the parameters from the URL so I can use them later.
+        //     let params = new URLSearchParams();
+        //     params.append('body', message)
         //     fetch('/chat', {
-        //         method: 'GET',
+        //         method: 'POST',
+        //         body: params.body,
         //     })
         //         .then((response) => response.json())
         //         .then((messages) => {
-        //             chatLog.innerHTML = when.messages.map(message => message.when).join('<br>')
+        //             chatLog.innerHTML = messages.map(message => message.body).join('<br>')
+
         //         })
+
         // })
+
+        // submitName.addEventListener('click', (event) => {
+
+        //     fetch('/chat', {
+        //         method: 'GET',
+        //     })
+        //    .then((response) => response.json())
+        //    .then((messages) => {
+        //        let userNameInput = submitName.value
+        //     userNameInput.innerHTML = messages.map(message => message.body).join('<br>')
+
+        //    })
+        //         })
+
+
+
     </script>
 </body>
 

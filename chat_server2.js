@@ -51,13 +51,17 @@ function handleRequest(request, response) {
           let message = {
             body: params.body,
             when: new Date().toISOString()
+
           }
-        
+
+
           messages.push(message);
 
           assistant.finishResponse(type, data);
-  
-          house.sendMessageToRoom(roomId, message);
+          // console.log(type)
+
+          // house.sendMessageToRoom(roomId, message);
+
 
         })
       }

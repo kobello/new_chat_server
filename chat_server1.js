@@ -2,7 +2,6 @@ const http = require('http');
 const mime = require('mime-types');
 const Assistant = require('./assistant');
 
-
 const port = process.env.PORT || 5000;
 let messages = [];
 
@@ -42,7 +41,6 @@ function handleRequest(request, response) {
           assistant.finishResponse(type, data);
         })
       }
-
     } else {
       let fileName = path.slice(1);
       assistant.sendFile(fileName)
