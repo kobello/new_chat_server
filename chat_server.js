@@ -54,10 +54,10 @@ function handleRequest(request, response) {
           }
         
           messages.push(message);
-
+          house.sendMessageToRoom(roomId, message);
           assistant.finishResponse(type, data);
   
-          house.sendMessageToRoom(roomId, message);
+          
 
         })
       }
